@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MannMitra - Digital Mental Health Support for Students</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'calm-blue': '#6B9BD2',
+                        'soft-green': '#7FB069',
+                        'pastel-purple': '#B19CD9',
+                        'warm-beige': '#F5F1E8',
+                        'light-mint': '#E8F5E8'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-warm-beige font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-calm-blue mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        <span class="text-2xl font-bold text-calm-blue">MannMitra</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#chatbot" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">AI Support</a>
+                        <a href="#booking" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Book Session</a>
+                        <a href="#resources" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Resources</a>
+                        <a href="#forum" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Peer Support</a>
+                        <a href="#admin" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Admin</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-calm-blue">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Home</a>
+                <a href="#chatbot" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">AI Support</a>
+                <a href="#booking" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Book Session</a>
+                <a href="#resources" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Resources</a>
+                <a href="#forum" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Peer Support</a>
+                <a href="#admin" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home/Landing Page -->
+    <section id="home" class="min-h-screen bg-gradient-to-br from-light-mint to-warm-beige">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center">
+
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
+                    Your Mental Health <span class="text-calm-blue">Matters</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    A safe, confidential, and supportive digital platform designed specifically for college students' mental wellness journey.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="scrollToSection('chatbot')" class="bg-calm-blue hover:bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors shadow-lg">
+                        Get Instant Support
+                    </button>
+                    <button onclick="scrollToSection('resources')" class="bg-soft-green hover:bg-green-600 text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors shadow-lg">
+                        Explore Resources
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-20 grid md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                    <svg class="mx-auto h-12 w-12 text-calm-blue mb-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">24/7 AI Support</h3>
+                    <p class="text-gray-600">Immediate mental health first-aid available anytime you need it.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                    <svg class="mx-auto h-12 w-12 text-soft-green mb-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Professional Counselors</h3>
+                    <p class="text-gray-600">Book confidential sessions with licensed mental health professionals.</p>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center">
+                    <svg class="mx-auto h-12 w-12 text-pastel-purple mb-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-4h3v4h2v-7.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5V18h2v-4h3v4h4V6H0v12h4z"/>
+                    </svg>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Peer Community</h3>
+                    <p class="text-gray-600">Connect anonymously with fellow students in a safe, moderated environment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chatbot Section -->
+    <section id="chatbot" class="min-h-screen bg-white py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <svg class="mx-auto h-16 w-16 text-calm-blue mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                </svg>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">AI Mental Health Support</h2>
+                <p class="text-xl text-gray-600">Get immediate, confidential support whenever you need it</p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-2xl p-6 shadow-lg">
+                <div id="chat-messages" class="h-96 overflow-y-auto mb-4 space-y-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-calm-blue rounded-full p-2">
+                            <svg class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                            </svg>
+                        </div>
+                        <div class="bg-white rounded-lg p-3 shadow">
+                            <p class="text-gray-800">Hello! I'm here to provide mental health support and guidance. How are you feeling today?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-2">
+                    <input type="text" id="chat-input" placeholder="Type your message here..." class="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue">
+                    <button onclick="sendMessage()" class="bg-calm-blue hover:bg-blue-600 text-white px-6 py-2 rounded-full transition-colors">
+                        Send
+                    </button>
+                </div>
+                
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <button onclick="quickMessage('I feel anxious')" class="bg-light-mint hover:bg-green-200 text-gray-700 px-4 py-2 rounded-full text-sm transition-colors">
+                        I feel anxious
+                    </button>
+                    <button onclick="quickMessage('I am stressed about exams')" class="bg-light-mint hover:bg-green-200 text-gray-700 px-4 py-2 rounded-full text-sm transition-colors">
+                        Exam stress
+                    </button>
+                    <button onclick="quickMessage('I feel lonely')" class="bg-light-mint hover:bg-green-200 text-gray-700 px-4 py-2 rounded-full text-sm transition-colors">
+                        I feel lonely
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking System -->
+    <section id="booking" class="min-h-screen bg-light-mint py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <svg class="mx-auto h-16 w-16 text-soft-green mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                </svg>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Book a Counseling Session</h2>
+                <p class="text-xl text-gray-600">Schedule confidential appointments with licensed professionals</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 shadow-lg">
+                <form id="booking-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Date</label>
+                            <input type="date" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-soft-green" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
+                            <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-soft-green" required>
+                                <option value="">Select time</option>
+                                <option value="09:00">9:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="14:00">2:00 PM</option>
+                                <option value="15:00">3:00 PM</option>
+                                <option value="16:00">4:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Session Type</label>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="session-type" value="individual" class="mr-3">
+                                <div>
+                                    <div class="font-medium">Individual Counseling</div>
+                                    <div class="text-sm text-gray-600">One-on-one session</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="session-type" value="group" class="mr-3">
+                                <div>
+                                    <div class="font-medium">Group Therapy</div>
+                                    <div class="text-sm text-gray-600">Small group session</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="session-type" value="crisis" class="mr-3">
+                                <div>
+                                    <div class="font-medium">Crisis Support</div>
+                                    <div class="text-sm text-gray-600">Immediate help</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Brief Description (Optional)</label>
+                        <textarea class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-soft-green" rows="4" placeholder="Briefly describe what you'd like to discuss..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-soft-green hover:bg-green-600 text-white py-3 rounded-lg text-lg font-semibold transition-colors">
+                        Book Appointment
+                    </button>
+                </form>
+                
+                <div id="booking-success" class="hidden mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                    <div class="flex items-center">
+                        <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        Your appointment has been booked successfully! You'll receive a confirmation email shortly.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resource Hub -->
+    <section id="resources" class="min-h-screen bg-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <svg class="mx-auto h-16 w-16 text-pastel-purple mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Mental Wellness Resources</h2>
+                <p class="text-xl text-gray-600">Curated content to support your mental health journey</p>
+            </div>
+            
+            <div class="mb-8">
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="filterResources('all')" class="resource-filter bg-pastel-purple text-white px-6 py-2 rounded-full transition-colors">All</button>
+                    <button onclick="filterResources('videos')" class="resource-filter bg-gray-200 text-gray-700 hover:bg-pastel-purple hover:text-white px-6 py-2 rounded-full transition-colors">Videos</button>
+                    <button onclick="filterResources('audio')" class="resource-filter bg-gray-200 text-gray-700 hover:bg-pastel-purple hover:text-white px-6 py-2 rounded-full transition-colors">Audio Guides</button>
+                    <button onclick="filterResources('articles')" class="resource-filter bg-gray-200 text-gray-700 hover:bg-pastel-purple hover:text-white px-6 py-2 rounded-full transition-colors">Articles</button>
+                </div>
+            </div>
+            
+            <div id="resources-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Video Resources -->
+                <div class="resource-item videos bg-gray-50 rounded-xl p-6 shadow-lg">
+                    <div class="bg-red-100 rounded-lg p-4 mb-4">
+                        <svg class="h-8 w-8 text-red-600 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Breathing Techniques</h3>
+                    <p class="text-gray-600 mb-4">Learn effective breathing exercises to manage anxiety and stress.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">5 min video</span>
+                        <button class="bg-calm-blue hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm transition-colors">Watch</button>
+                    </div>
+                </div>
+                
+                <div class="resource-item audio bg-gray-50 rounded-xl p-6 shadow-lg">
+                    <div class="bg-green-100 rounded-lg p-4 mb-4">
+                        <svg class="h-8 w-8 text-green-600 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Guided Meditation</h3>
+                    <p class="text-gray-600 mb-4">Relaxing meditation sessions for better sleep and reduced anxiety.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">15 min audio</span>
+                        <button class="bg-soft-green hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm transition-colors">Listen</button>
+                    </div>
+                </div>
+                
+                <div class="resource-item articles bg-gray-50 rounded-xl p-6 shadow-lg">
+                    <div class="bg-blue-100 rounded-lg p-4 mb-4">
+                        <svg class="h-8 w-8 text-blue-600 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Managing Exam Stress</h3>
+                    <p class="text-gray-600 mb-4">Practical strategies for handling academic pressure and test anxiety.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">8 min read</span>
+                        <button class="bg-pastel-purple hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-sm transition-colors">Read</button>
+                    </div>
+                </div>
+                
+                <div class="resource-item videos bg-gray-50 rounded-xl p-6 shadow-lg">
+                    <div class="bg-red-100 rounded-lg p-4 mb-4">
+                        <svg class="h-8 w-8 text-red-600 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Building Resilience</h3>
+                    <p class="text-gray-600 mb-4">Learn how to bounce back from setbacks and build mental strength.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">12 min video</span>
+                        <button class="bg-calm-blue hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm transition-colors">Watch</button>
+                    </div>
+                </div>
+                
+                <div class="resource-item audio bg-gray-50 rounded-xl p-6 shadow-lg">
+                    <div class="bg-green-100 rounded-lg p-4 mb-4">
+                        <svg class="h-8 w-8 text-green-600 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Sleep Stories (Hindi)</h3>
+                    <p class="text-gray-600 mb-4">Calming bedtime stories in Hindi to help you relax and sleep better.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">20 min audio</span>
+                        <button class="bg-soft-green hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm transition-colors">Listen</button>
+                    </div>
+                </div>
+                
+                <div class="resource-item articles bg-gray-50 rounded-xl p-6 shadow-lg">
+                    <div class="bg-blue-100 rounded-lg p-4 mb-4">
+                        <svg class="h-8 w-8 text-blue-600 mx-auto" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Social Anxiety Tips</h3>
+                    <p class="text-gray-600 mb-4">Overcome social fears and build confidence in social situations.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">6 min read</span>
+                        <button class="bg-pastel-purple hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-sm transition-colors">Read</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Peer Support Forum -->
+    <section id="forum" class="min-h-screen bg-light-mint py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <svg class="mx-auto h-16 w-16 text-soft-green mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-4h3v4h2v-7.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5V18h2v-4h3v4h4V6H0v12h4z"/>
+                </svg>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Peer Support Community</h2>
+                <p class="text-xl text-gray-600">Connect anonymously with fellow students in a safe, moderated space</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 shadow-lg">
+                <div class="mb-6">
+                    <button onclick="showNewPostForm()" class="bg-soft-green hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                        Share Your Story (Anonymous)
+                    </button>
+                </div>
+                
+                <div id="new-post-form" class="hidden mb-8 p-6 bg-gray-50 rounded-lg">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Share Anonymously</h3>
+                    <form id="forum-post-form">
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                            <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-soft-green" required>
+                                <option value="">Select category</option>
+                                <option value="anxiety">Anxiety & Stress</option>
+                                <option value="depression">Depression & Mood</option>
+                                <option value="academic">Academic Pressure</option>
+                                <option value="relationships">Relationships</option>
+                                <option value="general">General Support</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Your Story</label>
+                            <textarea class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-soft-green" rows="6" placeholder="Share your experience, feelings, or ask for support..." required></textarea>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button type="submit" class="bg-soft-green hover:bg-green-600 text-white px-6 py-2 rounded-lg transition-colors">
+                                Post Anonymously
+                            </button>
+                            <button type="button" onclick="hideNewPostForm()" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-6 py-2 rounded-lg transition-colors">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-2">
+                                <div class="bg-calm-blue rounded-full p-2">
+                                    <svg class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-600">Anonymous Student</span>
+                                <span class="text-sm text-gray-400">• 2 hours ago</span>
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Anxiety & Stress</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-800 mb-4">I've been feeling overwhelmed with my coursework lately. The pressure to maintain good grades while managing part-time work is getting to me. Anyone else going through something similar?</p>
+                        <div class="flex items-center space-x-4">
+                            <button class="flex items-center space-x-1 text-gray-600 hover:text-soft-green">
+                                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                                <span>12</span>
+                            </button>
+                            <button class="flex items-center space-x-1 text-gray-600 hover:text-soft-green">
+                                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                                </svg>
+                                <span>5 replies</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-2">
+                                <div class="bg-pastel-purple rounded-full p-2">
+                                    <svg class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-600">Anonymous Student</span>
+                                <span class="text-sm text-gray-400">• 5 hours ago</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">General Support</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-800 mb-4">Just wanted to share that I finally reached out for help after months of struggling. To anyone hesitating - it's worth it. You're not alone in this journey. 💚</p>
+                        <div class="flex items-center space-x-4">
+                            <button class="flex items-center space-x-1 text-gray-600 hover:text-soft-green">
+                                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                                <span>28</span>
+                            </button>
+                            <button class="flex items-center space-x-1 text-gray-600 hover:text-soft-green">
+                                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                                </svg>
+                                <span>15 replies</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard -->
+    <section id="admin" class="min-h-screen bg-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <svg class="mx-auto h-16 w-16 text-calm-blue mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                </svg>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Admin Dashboard</h2>
+                <p class="text-xl text-gray-600">Anonymous analytics and platform insights</p>
+                <div class="mt-4 bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-2 rounded-lg inline-block">
+                    <strong>Demo:</strong> This is a sample dashboard showing anonymized data trends
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-calm-blue text-white rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-blue-100">Active Users</p>
+                            <p class="text-3xl font-bold">1,247</p>
+                        </div>
+                        <svg class="h-12 w-12 text-blue-200" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-4h3v4h2v-7.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5V18h2v-4h3v4h4V6H0v12h4z"/>
+                        </svg>
+                    </div>
+                    <p class="text-blue-100 text-sm mt-2">↑ 12% from last month</p>
+                </div>
+                
+                <div class="bg-soft-green text-white rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-green-100">Sessions Booked</p>
+                            <p class="text-3xl font-bold">89</p>
+                        </div>
+                        <svg class="h-12 w-12 text-green-200" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                        </svg>
+                    </div>
+                    <p class="text-green-100 text-sm mt-2">↑ 8% from last week</p>
+                </div>
+                
+                <div class="bg-pastel-purple text-white rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-purple-100">Forum Posts</p>
+                            <p class="text-3xl font-bold">156</p>
+                        </div>
+                        <svg class="h-12 w-12 text-purple-200" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                        </svg>
+                    </div>
+                    <p class="text-purple-100 text-sm mt-2">↑ 23% from last week</p>
+                </div>
+                
+                <div class="bg-gray-600 text-white rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-100">AI Interactions</p>
+                            <p class="text-3xl font-bold">2,341</p>
+                        </div>
+                        <svg class="h-12 w-12 text-gray-200" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                        </svg>
+                    </div>
+                    <p class="text-gray-100 text-sm mt-2">↑ 34% from last month</p>
+                </div>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <div class="bg-gray-50 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Most Common Support Topics</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">Anxiety & Stress</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-32 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-calm-blue h-2 rounded-full" style="width: 78%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600">78%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">Academic Pressure</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-32 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-soft-green h-2 rounded-full" style="width: 65%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600">65%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">Depression & Mood</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-32 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-pastel-purple h-2 rounded-full" style="width: 52%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600">52%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-700">Relationships</span>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-32 bg-gray-200 rounded-full h-2">
+                                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 41%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600">41%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Platform Usage Trends</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg">
+                            <span class="text-gray-700">Peak Usage Hours</span>
+                            <span class="font-semibold text-calm-blue">8 PM - 11 PM</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg">
+                            <span class="text-gray-700">Most Active Day</span>
+                            <span class="font-semibold text-soft-green">Sunday</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg">
+                            <span class="text-gray-700">Avg. Session Duration</span>
+                            <span class="font-semibold text-pastel-purple">12 minutes</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg">
+                            <span class="text-gray-700">User Satisfaction</span>
+                            <span class="font-semibold text-yellow-600">4.7/5.0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <svg class="h-8 w-8 text-calm-blue mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        <span class="text-2xl font-bold">MindCare</span>
+                    </div>
+                    <p class="text-gray-300">Supporting student mental health with compassionate, accessible digital care.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#chatbot" class="text-gray-300 hover:text-white transition-colors">AI Support</a></li>
+                        <li><a href="#booking" class="text-gray-300 hover:text-white transition-colors">Book Session</a></li>
+                        <li><a href="#resources" class="text-gray-300 hover:text-white transition-colors">Resources</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Crisis Helpline</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Emergency</h3>
+                    <p class="text-gray-300 mb-2">If you're in crisis, please reach out:</p>
+                    <p class="text-calm-blue font-semibold">National Suicide Prevention Lifeline</p>
+                    <p class="text-white text-lg">988</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-300">&copy; 2024 MindCare. All rights reserved. Your mental health matters.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Navigation link smooth scrolling
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+                
+                // Close mobile menu if open
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Chatbot functionality
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (message) {
+                addMessage(message, 'user');
+                input.value = '';
+                
+                // Simulate AI response
+                setTimeout(() => {
+                    const responses = [
+                        "I understand you're going through a difficult time. It's completely normal to feel this way, and I'm here to help.",
+                        "Thank you for sharing that with me. Let's work through this together. Have you tried any breathing exercises?",
+                        "Your feelings are valid. It takes courage to reach out. Would you like some coping strategies?",
+                        "I hear you. Many students experience similar challenges. You're not alone in this."
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addMessage(randomResponse, 'ai');
+                }, 1000);
+            }
+        }
+
+        function quickMessage(message) {
+            document.getElementById('chat-input').value = message;
+            sendMessage();
+        }
+
+        function addMessage(message, sender) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex items-start space-x-3';
+            
+            if (sender === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="bg-gray-300 rounded-full p-2 ml-auto">
+                        <svg class="h-4 w-4 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                    </div>
+                    <div class="bg-calm-blue text-white rounded-lg p-3 shadow max-w-xs ml-auto">
+                        <p>${message}</p>
+                    </div>
+                `;
+                messageDiv.classList.add('flex-row-reverse');
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="bg-calm-blue rounded-full p-2">
+                        <svg class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                        </svg>
+                    </div>
+                    <div class="bg-white rounded-lg p-3 shadow max-w-xs">
+                        <p class="text-gray-800">${message}</p>
+                    </div>
+                `;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Enter key for chat
+        document.getElementById('chat-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Booking form submission
+        document.getElementById('booking-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('booking-success').classList.remove('hidden');
+            this.reset();
+            setTimeout(() => {
+                document.getElementById('booking-success').classList.add('hidden');
+            }, 5000);
+        });
+
+        // Resource filtering
+        function filterResources(category) {
+            const items = document.querySelectorAll('.resource-item');
+            const filters = document.querySelectorAll('.resource-filter');
+            
+            // Update filter buttons
+            filters.forEach(filter => {
+                filter.classList.remove('bg-pastel-purple', 'text-white');
+                filter.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            event.target.classList.remove('bg-gray-200', 'text-gray-700');
+            event.target.classList.add('bg-pastel-purple', 'text-white');
+            
+            // Filter items
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Forum functionality
+        function showNewPostForm() {
+            document.getElementById('new-post-form').classList.remove('hidden');
+        }
+
+        function hideNewPostForm() {
+            document.getElementById('new-post-form').classList.add('hidden');
+            document.getElementById('forum-post-form').reset();
+        }
+
+        document.getElementById('forum-post-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Your anonymous post has been submitted and is being reviewed by moderators. Thank you for sharing!');
+            hideNewPostForm();
+        });
+
+        // Set minimum date for booking to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.querySelector('input[type="date"]');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.setAttribute('min', today);
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9828f493213c4272',t:'MTc1ODQ1MTM0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
