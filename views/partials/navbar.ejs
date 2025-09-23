@@ -1,0 +1,54 @@
+<!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <svg class="h-8 w-8 text-calm-blue mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        <span class="text-2xl font-bold text-calm-blue">MannMitra</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/home" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="/chatbot" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">AI Support</a>
+                        <a href="/booking" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Book Session</a>
+                        <a href="/resources" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Resources</a>
+                        <a href="/peersupport" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Peer Support</a>
+                        <a href="/admin" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Admin</a>
+        <% if (user) { %>
+        <button style="border: 1px solid rgba(20, 19, 19, 0.373); border-radius: 8px;padding: 6px;"><a href="/logout" >Logout </a></button>
+    <% } else { %>
+        <button  style="border: 1px solid rgba(20, 19, 19, 0.373);border-radius: 8px; padding: 6px;"><a href="/login" >Login </a></button>
+        <button style="border: 1px solid rgba(20, 19, 19, 0.373);border-radius: 8px;padding: 6px;"><a href="/signup">Signup </a></button>
+    <% } %>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-calm-blue">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/home" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Home</a>
+                <a href="/chatbot" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">AI Support</a>
+                <a href="/booking" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Book Session</a>
+                <a href="/resources" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Resources</a>
+                <a href="/peersupport" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Peer Support</a>
+                <a href="/admin" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Admin</a>
+                 <% if (typeof user !== 'undefined') { %>
+        <a href="/logout">Logout</a>
+    <% } else { %>
+        <a href="/login">Login</a>
+        <a href="/signup">Signup</a>
+    <% } %>
+            </div>
+        </div>
+    </nav>
