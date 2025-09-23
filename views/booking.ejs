@@ -1,0 +1,82 @@
+<!-- Booking System -->
+    
+<section id="booking" class="min-h-screen bg-light-mint py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <svg class="mx-auto h-16 w-16 text-soft-green mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                </svg>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Book a Counseling Session</h2>
+                <p class="text-xl text-gray-600">Schedule confidential appointments with licensed professionals</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-8 shadow-lg">
+                <form id="booking-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Date</label>
+                            <input type="date" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-soft-green" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
+                            <select class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-soft-green" required>
+                                <option value="">Select time</option>
+                                <option value="09:00">9:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="14:00">2:00 PM</option>
+                                <option value="15:00">3:00 PM</option>
+                                <option value="16:00">4:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Session Type</label>
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="session-type" value="individual" class="mr-3">
+                                <div>
+                                    <div class="font-medium">Individual Counseling</div>
+                                    <div class="text-sm text-gray-600">One-on-one session</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="session-type" value="group" class="mr-3">
+                                <div>
+                                    <div class="font-medium">Group Therapy</div>
+                                    <div class="text-sm text-gray-600">Small group session</div>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="session-type" value="crisis" class="mr-3">
+                                <div>
+                                    <div class="font-medium">Crisis Support</div>
+                                    <div class="text-sm text-gray-600">Immediate help</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Brief Description (Optional)</label>
+                        <textarea class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-soft-green" rows="4" placeholder="Briefly describe what you'd like to discuss..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-soft-green hover:bg-green-600 text-white py-3 rounded-lg text-lg font-semibold transition-colors">
+                        Book Appointment
+                    </button>
+                </form>
+                
+                <div id="booking-success" class="hidden mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                    <div class="flex items-center">
+                        <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        Your appointment has been booked successfully! You'll receive a confirmation email shortly.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+   

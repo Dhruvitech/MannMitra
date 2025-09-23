@@ -1,0 +1,48 @@
+<!-- AI Chatbot Section -->
+  
+<section id="chatbot" class="min-h-screen bg-white py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <svg class="mx-auto h-16 w-16 text-calm-blue mb-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                </svg>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">AI Mental Health Support</h2>
+                <p class="text-xl text-gray-600">Get immediate, confidential support whenever you need it</p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-2xl p-6 shadow-lg">
+                <div id="chat-messages" class="h-96 overflow-y-auto mb-4 space-y-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-calm-blue rounded-full p-2">
+                            <svg class="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                            </svg>
+                        </div>
+                        <div class="bg-white rounded-lg p-3 shadow">
+                            <p class="text-gray-800">Hello! I'm here to provide mental health support and guidance. How are you feeling today?</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex space-x-2">
+                    <input type="text" id="chat-input" placeholder="Type your message here..." class="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue">
+                    <button onclick="sendMessage()" class="bg-calm-blue hover:bg-blue-600 text-white px-6 py-2 rounded-full transition-colors">
+                        Send
+                    </button>
+                </div>
+                
+                <div class="mt-4 flex flex-wrap gap-2">
+                    <button onclick="quickMessage('I feel anxious')" class="bg-light-mint hover:bg-green-200 text-gray-700 px-4 py-2 rounded-full text-sm transition-colors">
+                        I feel anxious
+                    </button>
+                    <button onclick="quickMessage('I am stressed about exams')" class="bg-light-mint hover:bg-green-200 text-gray-700 px-4 py-2 rounded-full text-sm transition-colors">
+                        Exam stress
+                    </button>
+                    <button onclick="quickMessage('I feel lonely')" class="bg-light-mint hover:bg-green-200 text-gray-700 px-4 py-2 rounded-full text-sm transition-colors">
+                        I feel lonely
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
