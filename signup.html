@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MannMitra - Sign Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'calm-blue': '#6B9BD2',
+            'soft-green': '#7FB069',
+            'warm-beige': '#F5F1E8',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-warm-beige">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold text-calm-blue">MannMitra</a>
+      <div class="space-x-6">
+        <a href="login.html" class="text-calm-blue font-semibold">Login</a>
+        <a href="signup.html" class="bg-soft-green text-white px-4 py-2 rounded-full hover:bg-green-600 transition-colors">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Signup Form -->
+  <div class="flex items-center justify-center min-h-screen px-4">
+    <div class="bg-white rounded-2xl shadow-xl p-10 w-full max-w-md mt-12">
+      <h2 class="text-3xl font-bold text-soft-green text-center mb-6">Create Account</h2>
+      <p class="text-gray-600 text-center mb-8">Join MannMitra to access mental health support</p>
+
+      <form id="signup-form" class="space-y-6">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="John Doe" required
+                 class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-soft-green">
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required
+                 class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-soft-green">
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+          <input type="password" id="password" name="password" placeholder="Enter your password" required
+                 class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-soft-green">
+        </div>
+
+        <div>
+          <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+          <input type="password" id="confirm-password" name="confirm-password" placeholder="Re-enter your password" required
+                 class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-soft-green">
+        </div>
+
+        <button type="submit" class="w-full bg-soft-green hover:bg-green-600 text-white py-3 rounded-full font-semibold text-lg transition-colors">
+          Sign Up
+        </button>
+      </form>
+
+      <p class="text-center text-gray-600 mt-6">
+        Already have an account? 
+        <a href="login.html" class="text-calm-blue hover:underline">Log In</a>
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>
