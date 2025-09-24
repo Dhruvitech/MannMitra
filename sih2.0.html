@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MannMitra - Digital Mental Health Support for Students</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'calm-blue': '#6B9BD2',
+                        'soft-green': '#7FB069',
+                        'pastel-purple': '#B19CD9',
+                        'warm-beige': '#F5F1E8',
+                        'light-mint': '#E8F5E8'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #E8F5E8 0%, #F0F8FF 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        .chat-message {
+            animation: fadeInUp 0.3s ease-out;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white/90 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-calm-blue rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">🧠</span>
+                    </div>
+                    <span class="text-xl font-bold text-gray-800">MannMitra</span>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <button onclick="showSection('home')" class="nav-btn text-gray-700 hover:text-calm-blue transition-colors">Home</button>
+                    <button onclick="showSection('chatbot')" class="nav-btn text-gray-700 hover:text-calm-blue transition-colors">AI Support</button>
+                    <button onclick="showSection('booking')" class="nav-btn text-gray-700 hover:text-calm-blue transition-colors">Book Session</button>
+                    <button onclick="showSection('resources')" class="nav-btn text-gray-700 hover:text-calm-blue transition-colors">Resources</button>
+                    <button onclick="showSection('forum')" class="nav-btn text-gray-700 hover:text-calm-blue transition-colors">Peer Forum</button>
+                    <button onclick="showSection('goals')" class="nav-btn text-gray-700 hover:text-calm-blue transition-colors">Goal Tracker</button>
+                    <button onclick="showSection('admin')" class="nav-btn text-gray-700 hover:text-calm-blue transition-colors">Admin</button>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <button onclick="showSection('home')" class="block w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100">Home</button>
+                <button onclick="showSection('chatbot')" class="block w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100">AI Support</button>
+                <button onclick="showSection('booking')" class="block w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100">Book Session</button>
+                <button onclick="showSection('resources')" class="block w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100">Resources</button>
+                <button onclick="showSection('forum')" class="block w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100">Peer Forum</button>
+                <button onclick="showSection('goals')" class="block w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100">Goal Tracker</button>
+                <button onclick="showSection('admin')" class="block w-full text-left px-3 py-2 text-gray-700 hover:bg-gray-100">Admin</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="section-content">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <!-- Hero Section -->
+            <div class="text-center mb-16">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
+                    Your Mental Health <span class="text-calm-blue">Matters</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                    A safe, confidential, and supportive digital platform designed specifically for college students. 
+                    Get instant AI support, connect with counselors, and join a caring community.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="showSection('chatbot')" class="bg-calm-blue text-white px-8 py-3 rounded-full hover:bg-blue-600 transition-colors font-semibold">
+                        🤖 Get Instant Support
+                    </button>
+                    <button onclick="showSection('booking')" class="bg-soft-green text-white px-8 py-3 rounded-full hover:bg-green-600 transition-colors font-semibold">
+                        📅 Book a Session
+                    </button>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-calm-blue/20 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-2xl">🤖</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">24/7 AI Support</h3>
+                    <p class="text-gray-600">Immediate mental health first-aid support whenever you need it, powered by compassionate AI.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-soft-green/20 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-2xl">👥</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Professional Counselors</h3>
+                    <p class="text-gray-600">Book confidential sessions with licensed mental health professionals who understand student life.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-pastel-purple/20 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-2xl">🎯</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Goal Tracking</h3>
+                    <p class="text-gray-600">Set and track personal wellness goals with AI encouragement and progress visualization.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-calm-blue/20 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-2xl">📚</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Resource Hub</h3>
+                    <p class="text-gray-600">Access videos, audio guides, and articles in multiple languages for comprehensive support.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-soft-green/20 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-2xl">💬</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Peer Support</h3>
+                    <p class="text-gray-600">Connect anonymously with fellow students in a safe, moderated community forum.</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                    <div class="w-12 h-12 bg-pastel-purple/20 rounded-full flex items-center justify-center mb-4">
+                        <span class="text-2xl">🔒</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Complete Privacy</h3>
+                    <p class="text-gray-600">Your data is secure and confidential. Anonymous options available for all interactions.</p>
+                </div>
+            </div>
+
+            <!-- Crisis Support Banner -->
+            <div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center">
+                <h3 class="text-xl font-semibold text-red-800 mb-2">🚨 Crisis Support</h3>
+                <p class="text-red-700 mb-4">If you're experiencing a mental health emergency, please reach out immediately:</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="tel:9152987821" class="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 transition-colors">
+                        📞 AASRA: 91529-87821
+                    </a>
+                    <a href="tel:08046110007" class="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 transition-colors">
+                        💬 Vandrevala: 1860-2662-345
+                    </a>
+                    <a href="tel:102" class="bg-red-600 text-white px-6 py-2 rounded-full hover:bg-red-700 transition-colors">
+                        🚑 Emergency: 102/108
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chatbot Section -->
+    <section id="chatbot" class="section-content hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">🤖 AI Mental Health Support</h2>
+                <p class="text-gray-600">Get immediate, compassionate support 24/7. Our AI is trained to provide mental health first-aid and guide you to appropriate resources.</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="bg-calm-blue text-white p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                            <span class="text-xl">🤖</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">MindCare AI Assistant</h3>
+                            <p class="text-sm opacity-90">Online • Always here for you</p>
+                        </div>
+                    </div>
+                    <button onclick="clearChat()" class="text-white/80 hover:text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div id="chat-messages" class="h-96 overflow-y-auto p-4 space-y-4">
+                    <div class="flex items-start space-x-3 chat-message">
+                        <div class="w-8 h-8 bg-calm-blue rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-white text-sm">🤖</span>
+                        </div>
+                        <div class="bg-gray-100 rounded-2xl rounded-tl-sm p-3 max-w-xs">
+                            <p class="text-sm">Hello! I'm here to provide mental health support and guidance. How are you feeling today? Remember, if you're in crisis, please call AASRA (91529-87821) or emergency services (102/108) immediately.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="border-t p-4">
+                    <div class="flex space-x-3">
+                        <input 
+                            type="text" 
+                            id="chat-input" 
+                            placeholder="Type your message here..." 
+                            class="flex-1 border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue focus:border-transparent"
+                            onkeypress="handleChatKeyPress(event)"
+                        >
+                        <button 
+                            onclick="sendMessage()" 
+                            class="bg-calm-blue text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-colors"
+                        >
+                            Send
+                        </button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mt-3">
+                        <button onclick="sendQuickMessage('I feel anxious')" class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200">
+                            I feel anxious
+                        </button>
+                        <button onclick="sendQuickMessage('I am stressed about exams')" class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200">
+                            Exam stress
+                        </button>
+                        <button onclick="sendQuickMessage('I feel lonely')" class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200">
+                            I feel lonely
+                        </button>
+                        <button onclick="sendQuickMessage('I need coping strategies')" class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200">
+                            Coping strategies
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                <p class="text-sm text-yellow-800">
+                    <strong>Disclaimer:</strong> This AI provides general mental health information and support. It's not a replacement for professional medical advice, diagnosis, or treatment. If you're experiencing a mental health emergency, please contact emergency services immediately.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking System Section -->
+    <section id="booking" class="section-content hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">📅 Book a Confidential Session</h2>
+                <p class="text-gray-600">Schedule a private appointment with our licensed mental health professionals who specialize in student support.</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Booking Form -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-6">Schedule Your Appointment</h3>
+                    <form id="booking-form" onsubmit="handleBooking(event)">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Session Type</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue">
+                                    <option>Individual Counseling (50 min)</option>
+                                    <option>Crisis Support (30 min)</option>
+                                    <option>Academic Stress Support (40 min)</option>
+                                    <option>Anxiety & Depression Support (50 min)</option>
+                                    <option>Peer Relationship Issues (40 min)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Date</label>
+                                    <input type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue" min="2024-01-01">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
+                                    <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue">
+                                        <option>9:00 AM</option>
+                                        <option>10:00 AM</option>
+                                        <option>11:00 AM</option>
+                                        <option>1:00 PM</option>
+                                        <option>2:00 PM</option>
+                                        <option>3:00 PM</option>
+                                        <option>4:00 PM</option>
+                                        <option>5:00 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Session Type</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="radio" name="session-mode" value="online" class="mr-2" checked onchange="toggleSessionOptions()">
+                                        <span class="text-sm font-medium">🌐 Online Session</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="session-mode" value="offline" class="mr-2" onchange="toggleSessionOptions()">
+                                        <span class="text-sm font-medium">🏢 In-Person Session</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div id="online-options" class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Online Method</label>
+                                <div class="space-y-2 ml-4">
+                                    <label class="flex items-center">
+                                        <input type="radio" name="contact" value="video" class="mr-2" checked>
+                                        <span class="text-sm">📹 Video Call (Recommended)</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="contact" value="phone" class="mr-2">
+                                        <span class="text-sm">📞 Phone Call</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="contact" value="chat" class="mr-2">
+                                        <span class="text-sm">💬 Text Chat</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div id="offline-options" class="hidden space-y-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Location</label>
+                                <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue">
+                                    <option>Campus Counseling Center</option>
+                                    <option>Student Health Center</option>
+                                    <option>Psychology Department</option>
+                                    <option>Private Clinic - Sector 15, Noida</option>
+                                    <option>Private Clinic - Connaught Place, Delhi</option>
+                                    <option>Private Clinic - Koramangala, Bangalore</option>
+                                </select>
+                                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-2">
+                                    <p class="text-sm text-blue-800">
+                                        <strong>Note:</strong> In-person sessions are available at select locations. Transportation assistance may be available for students in need.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Student ID (Optional)</label>
+                                    <input type="text" placeholder="Your student ID" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Language</label>
+                                    <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue">
+                                        <option>English</option>
+                                        <option>Hindi</option>
+                                        <option>Tamil</option>
+                                        <option>Telugu</option>
+                                        <option>Bengali</option>
+                                        <option>Marathi</option>
+                                        <option>Gujarati</option>
+                                        <option>Malayalam</option>
+                                        <option>Kannada</option>
+                                        <option>Punjabi</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Gender Preference for Counselor (Optional)</label>
+                                <div class="flex space-x-4">
+                                    <label class="flex items-center">
+                                        <input type="radio" name="gender-pref" value="no-preference" class="mr-2" checked>
+                                        <span class="text-sm">No Preference</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="gender-pref" value="female" class="mr-2">
+                                        <span class="text-sm">Female</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="radio" name="gender-pref" value="male" class="mr-2">
+                                        <span class="text-sm">Male</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Brief Description (Optional)</label>
+                                <textarea placeholder="What would you like to discuss? This helps us match you with the right counselor." rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue"></textarea>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <input type="checkbox" id="privacy-consent" class="mr-2" required>
+                                <label for="privacy-consent" class="text-sm text-gray-600">I understand that all sessions are confidential and agree to the privacy policy.</label>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-soft-green text-white py-3 rounded-lg hover:bg-green-600 transition-colors font-semibold">
+                                📅 Request Appointment
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Available Counselors -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4">Our Counselors</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-4 p-3 border border-gray-200 rounded-lg">
+                                <div class="w-12 h-12 bg-calm-blue rounded-full flex items-center justify-center">
+                                    <span class="text-white font-semibold">PS</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">Dr. Priya Sharma</h4>
+                                    <p class="text-sm text-gray-600">Clinical Psychologist, M.Phil (RCI Licensed)</p>
+                                    <p class="text-xs text-gray-500">Specializes in anxiety, depression, academic stress • Hindi, English</p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-green-600 text-sm font-medium">Available</div>
+                                    <div class="text-xs text-gray-500">Next: Today 2PM</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 p-3 border border-gray-200 rounded-lg">
+                                <div class="w-12 h-12 bg-soft-green rounded-full flex items-center justify-center">
+                                    <span class="text-white font-semibold">AK</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">Dr. Arjun Kumar</h4>
+                                    <p class="text-sm text-gray-600">Psychiatrist, MBBS, MD (Psychiatry)</p>
+                                    <p class="text-xs text-gray-500">Specializes in mood disorders, anxiety, medication management • Hindi, English, Tamil</p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-green-600 text-sm font-medium">Available</div>
+                                    <div class="text-xs text-gray-500">Next: Tomorrow 10AM</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 p-3 border border-gray-200 rounded-lg">
+                                <div class="w-12 h-12 bg-pastel-purple rounded-full flex items-center justify-center">
+                                    <span class="text-white font-semibold">SM</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">Ms. Sneha Mehta</h4>
+                                    <p class="text-sm text-gray-600">Counseling Psychologist, MA Psychology</p>
+                                    <p class="text-xs text-gray-500">Specializes in student counseling, career guidance, relationships • Hindi, English, Gujarati</p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-yellow-600 text-sm font-medium">Busy</div>
+                                    <div class="text-xs text-gray-500">Next: Friday 3PM</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 p-3 border border-gray-200 rounded-lg">
+                                <div class="w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center">
+                                    <span class="text-white font-semibold">RN</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">Dr. Rajesh Nair</h4>
+                                    <p class="text-sm text-gray-600">Clinical Psychologist, PhD Psychology</p>
+                                    <p class="text-xs text-gray-500">Specializes in trauma, PTSD, family therapy • English, Malayalam, Hindi</p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-green-600 text-sm font-medium">Available</div>
+                                    <div class="text-xs text-gray-500">Next: Today 4PM</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Crisis Support -->
+                    <div class="bg-red-50 border border-red-200 rounded-2xl p-6">
+                        <h3 class="text-lg font-semibold text-red-800 mb-3">🚨 Need Immediate Help?</h3>
+                        <p class="text-red-700 text-sm mb-4">If you're experiencing a mental health crisis, don't wait for an appointment.</p>
+                        <div class="space-y-2">
+                            <a href="tel:9152987821" class="block w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors text-sm font-medium text-center">
+                                📞 AASRA: 91529-87821
+                            </a>
+                            <a href="tel:18602662345" class="block w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors text-sm font-medium text-center">
+                                💬 Vandrevala: 1860-2662-345
+                            </a>
+                            <a href="tel:102" class="block w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors text-sm font-medium text-center">
+                                🚑 Emergency: 102/108
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Hub Section -->
+    <section id="resources" class="section-content hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">📚 Mental Wellness Resources</h2>
+                <p class="text-gray-600">Comprehensive collection of videos, audio guides, and articles to support your mental health journey.</p>
+            </div>
+            
+            <!-- Language Selector -->
+            <div class="flex justify-center mb-8">
+                <select id="language-selector" class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue" onchange="filterByLanguage()">
+                    <option value="all">All Languages</option>
+                    <option value="english">English</option>
+                    <option value="spanish">Español</option>
+                    <option value="french">Français</option>
+                    <option value="mandarin">中文</option>
+                    <option value="hindi">हिंदी</option>
+                </select>
+            </div>
+            
+            <!-- Resource Categories -->
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Videos Section -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                            <span class="text-xl">🎥</span>
+                        </div>
+                        <h3 class="text-xl font-semibold">Video Resources</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="resource-item border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow" data-language="english">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-16 h-12 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                                    <span class="text-xs">▶️</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-sm">Managing Exam Anxiety</h4>
+                                    <p class="text-xs text-gray-600 mt-1">Learn practical techniques to reduce test anxiety and improve performance.</p>
+                                    <div class="flex items-center justify-between mt-2">
+                                        <span class="text-xs text-gray-500">12 min • English</span>
+                                        <button class="text-calm-blue text-xs hover:underline">Watch</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow" data-language="spanish">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-16 h-12 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                                    <span class="text-xs">▶️</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-sm">Técnicas de Respiración</h4>
+                                    <p class="text-xs text-gray-600 mt-1">Aprende ejercicios de respiración para reducir el estrés y la ansiedad.</p>
+                                    <div class="flex items-center justify-between mt-2">
+                                        <span class="text-xs text-gray-500">8 min • Español</span>
+                                        <button class="text-calm-blue text-xs hover:underline">Ver</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow" data-language="english">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-16 h-12 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                                    <span class="text-xs">▶️</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-sm">Building Healthy Relationships</h4>
+                                    <p class="text-xs text-gray-600 mt-1">Tips for maintaining friendships and romantic relationships in college.</p>
+                                    <div class="flex items-center justify-between mt-2">
+                                        <span class="text-xs text-gray-500">15 min • English</span>
+                                        <button class="text-calm-blue text-xs hover:underline">Watch</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Audio Guides Section -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                            <span class="text-xl">🎧</span>
+                        </div>
+                        <h3 class="text-xl font-semibold">Audio Guides</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="resource-item border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow" data-language="english">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-16 h-12 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                                    <span class="text-xs">🎵</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-sm">Guided Meditation for Sleep</h4>
+                                    <p class="text-xs text-gray-600 mt-1">Relaxing meditation to help you fall asleep peacefully.</p>
+                                    <div class="flex items-center justify-between mt-2">
+                                        <span class="text-xs text-gray-500">20 min • English</span>
+                                        <button class="text-soft-green text-xs hover:underline">Listen</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow" data-language="hindi">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-16 h-12 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                                    <span class="text-xs">🎵</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-sm">तनाव मुक्ति ध्यान</h4>
+                                    <p class="text-xs text-gray-600 mt-1">तनाव कम करने के लिए निर्देशित ध्यान अभ्यास।</p>
+                                    <div class="flex items-center justify-between mt-2">
+                                        <span class="text-xs text-gray-500">15 min • हिंदी</span>
+                                        <button class="text-soft-green text-xs hover:underline">सुनें</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow" data-language="french">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-16 h-12 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                                    <span class="text-xs">🎵</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-medium text-sm">Relaxation Progressive</h4>
+                                    <p class="text-xs text-gray-600 mt-1">Technique de relaxation musculaire progressive pour réduire le stress.</p>
+                                    <div class="flex items-center justify-between mt-2">
+                                        <span class="text-xs text-gray-500">18 min • Français</span>
+                                        <button class="text-soft-green text-xs hover:underline">Écouter</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Articles Section -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                            <span class="text-xl">📖</span>
+                        </div>
+                        <h3 class="text-xl font-semibold">Articles & Guides</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="resource-item border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow" data-language="english">
+                            <h4 class="font-medium text-sm mb-2">Understanding Depression in College</h4>
+                            <p class="text-xs text-gray-600 mb-3">Comprehensive guide to recognizing signs and seeking help for depression during college years.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-500">5 min read • English</span>
+                                <button class="text-calm-blue text-xs hover:underline">Read</button>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow" data-language="mandarin">
+                            <h4 class="font-medium text-sm mb-2">大学生心理健康指南</h4>
+                            <p class="text-xs text-gray-600 mb-3">帮助大学生维护心理健康的实用建议和策略。</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-500">7 min read • 中文</span>
+                                <button class="text-calm-blue text-xs hover:underline">阅读</button>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-item border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow" data-language="english">
+                            <h4 class="font-medium text-sm mb-2">Time Management for Better Mental Health</h4>
+                            <p class="text-xs text-gray-600 mb-3">Learn how proper time management can reduce stress and improve overall well-being.</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-500">6 min read • English</span>
+                                <button class="text-calm-blue text-xs hover:underline">Read</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Access Tools -->
+            <div class="mt-12 bg-white rounded-2xl shadow-lg p-6">
+                <h3 class="text-xl font-semibold mb-6 text-center">🛠️ Quick Mental Health Tools</h3>
+                <div class="grid md:grid-cols-4 gap-4">
+                    <button onclick="startBreathingExercise()" class="bg-calm-blue/10 hover:bg-calm-blue/20 p-4 rounded-xl text-center transition-colors">
+                        <div class="text-2xl mb-2">🫁</div>
+                        <div class="text-sm font-medium">Breathing Exercise</div>
+                    </button>
+                    <button onclick="startMoodTracker()" class="bg-soft-green/10 hover:bg-soft-green/20 p-4 rounded-xl text-center transition-colors">
+                        <div class="text-2xl mb-2">📊</div>
+                        <div class="text-sm font-medium">Mood Tracker</div>
+                    </button>
+                    <button onclick="startGratitudeJournal()" class="bg-pastel-purple/10 hover:bg-pastel-purple/20 p-4 rounded-xl text-center transition-colors">
+                        <div class="text-2xl mb-2">📝</div>
+                        <div class="text-sm font-medium">Gratitude Journal</div>
+                    </button>
+                    <button onclick="startRelaxationTimer()" class="bg-yellow-100 hover:bg-yellow-200 p-4 rounded-xl text-center transition-colors">
+                        <div class="text-2xl mb-2">⏰</div>
+                        <div class="text-sm font-medium">Relaxation Timer</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Peer Support Forum Section -->
+    <section id="forum" class="section-content hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">💬 Peer Support Forum</h2>
+                <p class="text-gray-600">Connect with fellow students in a safe, anonymous, and moderated community space.</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Forum Categories -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+                        <h3 class="text-lg font-semibold mb-4">Forum Categories</h3>
+                        <div class="space-y-2">
+                            <button onclick="filterForum('all')" class="forum-filter w-full text-left p-3 rounded-lg hover:bg-gray-100 transition-colors bg-calm-blue/10 text-calm-blue">
+                                🌟 All Posts
+                            </button>
+                            <button onclick="filterForum('anxiety')" class="forum-filter w-full text-left p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                😰 Anxiety Support
+                            </button>
+                            <button onclick="filterForum('depression')" class="forum-filter w-full text-left p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                💙 Depression Support
+                            </button>
+                            <button onclick="filterForum('academic')" class="forum-filter w-full text-left p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                📚 Academic Stress
+                            </button>
+                            <button onclick="filterForum('relationships')" class="forum-filter w-full text-left p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                💕 Relationships
+                            </button>
+                            <button onclick="filterForum('general')" class="forum-filter w-full text-left p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                                💬 General Support
+                            </button>
+                        </div>
+                        
+                        <div class="mt-6 pt-6 border-t">
+                            <button onclick="showNewPostModal()" class="w-full bg-soft-green text-white py-3 rounded-lg hover:bg-green-600 transition-colors font-semibold">
+                                ✏️ New Post
+                            </button>
+                        </div>
+                        
+                        <div class="mt-6 pt-6 border-t">
+                            <h4 class="font-medium mb-3">Community Guidelines</h4>
+                            <ul class="text-xs text-gray-600 space-y-1">
+                                <li>• Be respectful and supportive</li>
+                                <li>• No personal information sharing</li>
+                                <li>• Report inappropriate content</li>
+                                <li>• Seek professional help for crises</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Forum Posts -->
+                <div class="lg:col-span-2">
+                    <div id="forum-posts" class="space-y-6">
+                        <!-- Sample Posts -->
+                        <div class="forum-post bg-white rounded-2xl shadow-lg p-6" data-category="anxiety">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-calm-blue rounded-full flex items-center justify-center">
+                                        <span class="text-white font-semibold text-sm">A</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium">Anonymous Student</div>
+                                        <div class="text-sm text-gray-500">2 hours ago • Anxiety Support</div>
+                                    </div>
+                                </div>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Moderated ✓</span>
+                            </div>
+                            
+                            <h4 class="font-semibold mb-3">Dealing with presentation anxiety</h4>
+                            <p class="text-gray-700 mb-4">I have a big presentation coming up next week and I'm already losing sleep over it. My heart races just thinking about standing in front of the class. Has anyone found techniques that actually work for presentation anxiety?</p>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <button class="flex items-center space-x-1 text-gray-500 hover:text-calm-blue">
+                                        <span>👍</span>
+                                        <span class="text-sm">12</span>
+                                    </button>
+                                    <button class="flex items-center space-x-1 text-gray-500 hover:text-soft-green">
+                                        <span>💬</span>
+                                        <span class="text-sm">5 replies</span>
+                                    </button>
+                                </div>
+                                <button class="text-calm-blue text-sm hover:underline">Reply</button>
+                            </div>
+                        </div>
+                        
+                        <div class="forum-post bg-white rounded-2xl shadow-lg p-6" data-category="academic">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-soft-green rounded-full flex items-center justify-center">
+                                        <span class="text-white font-semibold text-sm">S</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium">Anonymous Student</div>
+                                        <div class="text-sm text-gray-500">5 hours ago • Academic Stress</div>
+                                    </div>
+                                </div>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Moderated ✓</span>
+                            </div>
+                            
+                            <h4 class="font-semibold mb-3">Feeling overwhelmed with course load</h4>
+                            <p class="text-gray-700 mb-4">This semester feels impossible. I'm taking 18 credits and working part-time. I feel like I'm drowning and can't keep up with everything. How do you all manage heavy course loads?</p>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <button class="flex items-center space-x-1 text-gray-500 hover:text-calm-blue">
+                                        <span>👍</span>
+                                        <span class="text-sm">8</span>
+                                    </button>
+                                    <button class="flex items-center space-x-1 text-gray-500 hover:text-soft-green">
+                                        <span>💬</span>
+                                        <span class="text-sm">3 replies</span>
+                                    </button>
+                                </div>
+                                <button class="text-calm-blue text-sm hover:underline">Reply</button>
+                            </div>
+                        </div>
+                        
+                        <div class="forum-post bg-white rounded-2xl shadow-lg p-6" data-category="general">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-pastel-purple rounded-full flex items-center justify-center">
+                                        <span class="text-white font-semibold text-sm">M</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium">Anonymous Student</div>
+                                        <div class="text-sm text-gray-500">1 day ago • General Support</div>
+                                    </div>
+                                </div>
+                                <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Moderated ✓</span>
+                            </div>
+                            
+                            <h4 class="font-semibold mb-3">Small wins thread - share your victories! 🎉</h4>
+                            <p class="text-gray-700 mb-4">I finally went to the gym after weeks of putting it off! It wasn't much, just 20 minutes on the treadmill, but I'm proud of myself. What small wins have you had this week?</p>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <button class="flex items-center space-x-1 text-gray-500 hover:text-calm-blue">
+                                        <span>👍</span>
+                                        <span class="text-sm">24</span>
+                                    </button>
+                                    <button class="flex items-center space-x-1 text-gray-500 hover:text-soft-green">
+                                        <span>💬</span>
+                                        <span class="text-sm">15 replies</span>
+                                    </button>
+                                </div>
+                                <button class="text-calm-blue text-sm hover:underline">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personal Goal Tracker Section -->
+    <section id="goals" class="section-content hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">🎯 Personal Goal Tracker</h2>
+                <p class="text-gray-600">Set achievable weekly goals and track your progress toward better mental wellness habits.</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Current Goal -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-semibold">This Week's Goal</h3>
+                        <button onclick="showGoalModal()" class="bg-calm-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm">
+                            Set New Goal
+                        </button>
+                    </div>
+                    
+                    <div id="current-goal" class="space-y-4">
+                        <div class="bg-soft-green/10 border border-soft-green/20 rounded-xl p-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-semibold text-soft-green">🧘‍♀️ Meditate 5 times this week</h4>
+                                <span class="text-sm text-gray-500">3/7 days left</span>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm mb-2">
+                                    <span>Progress: 3/5 sessions</span>
+                                    <span class="text-soft-green font-medium">60%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-soft-green h-3 rounded-full progress-bar" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <button onclick="logProgress()" class="bg-soft-green text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors text-sm">
+                                    ✅ Log Session
+                                </button>
+                                <div class="text-sm text-gray-600">
+                                    <span class="text-soft-green font-medium">Great progress!</span> Keep it up! 🌟
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- AI Encouragement -->
+                        <div class="bg-calm-blue/10 border border-calm-blue/20 rounded-xl p-4">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 bg-calm-blue rounded-full flex items-center justify-center flex-shrink-0">
+                                    <span class="text-white text-sm">🤖</span>
+                                </div>
+                                <div>
+                                    <h5 class="font-medium text-calm-blue mb-1">AI Encouragement</h5>
+                                    <p class="text-sm text-gray-700">You're doing amazing! You've completed 60% of your meditation goal. Try setting aside 10 minutes before bed tonight for your next session. Remember, consistency is more important than perfection! 🌙</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Goal History & Stats -->
+                <div class="space-y-6">
+                    <!-- Weekly Stats -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4">Weekly Stats</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center p-4 bg-soft-green/10 rounded-xl">
+                                <div class="text-2xl font-bold text-soft-green">3</div>
+                                <div class="text-sm text-gray-600">Goals Completed</div>
+                            </div>
+                            <div class="text-center p-4 bg-calm-blue/10 rounded-xl">
+                                <div class="text-2xl font-bold text-calm-blue">85%</div>
+                                <div class="text-sm text-gray-600">Average Progress</div>
+                            </div>
+                            <div class="text-center p-4 bg-pastel-purple/10 rounded-xl">
+                                <div class="text-2xl font-bold text-pastel-purple">12</div>
+                                <div class="text-sm text-gray-600">Day Streak</div>
+                            </div>
+                            <div class="text-center p-4 bg-yellow-100 rounded-xl">
+                                <div class="text-2xl font-bold text-yellow-600">🏆</div>
+                                <div class="text-sm text-gray-600">Achievement</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Goals -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h3 class="text-xl font-semibold mb-4">Recent Goals</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-green-600">✅</span>
+                                    <div>
+                                        <div class="font-medium text-sm">Journal daily for a week</div>
+                                        <div class="text-xs text-gray-500">Completed last week</div>
+                                    </div>
+                                </div>
+                                <div class="text-green-600 font-medium text-sm">100%</div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-3 bg-green-50 border border-green-200 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-green-600">✅</span>
+                                    <div>
+                                        <div class="font-medium text-sm">Exercise 3 times</div>
+                                        <div class="text-xs text-gray-500">Completed 2 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="text-green-600 font-medium text-sm">100%</div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-yellow-600">⏳</span>
+                                    <div>
+                                        <div class="font-medium text-sm">Read for 30 min daily</div>
+                                        <div class="text-xs text-gray-500">Partially completed 3 weeks ago</div>
+                                    </div>
+                                </div>
+                                <div class="text-yellow-600 font-medium text-sm">71%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Suggested Goals -->
+            <div class="mt-12 bg-white rounded-2xl shadow-lg p-6">
+                <h3 class="text-xl font-semibold mb-6">💡 Suggested Goals for Mental Wellness</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <button onclick="setQuickGoal('meditate', '5 times this week')" class="text-left p-4 border border-gray-200 rounded-xl hover:border-calm-blue hover:bg-calm-blue/5 transition-colors">
+                        <div class="text-2xl mb-2">🧘‍♀️</div>
+                        <div class="font-medium mb-1">Meditation Practice</div>
+                        <div class="text-sm text-gray-600">Meditate 5 times this week</div>
+                    </button>
+                    
+                    <button onclick="setQuickGoal('journal', 'daily for 7 days')" class="text-left p-4 border border-gray-200 rounded-xl hover:border-soft-green hover:bg-soft-green/5 transition-colors">
+                        <div class="text-2xl mb-2">📝</div>
+                        <div class="font-medium mb-1">Daily Journaling</div>
+                        <div class="text-sm text-gray-600">Write in journal daily for 7 days</div>
+                    </button>
+                    
+                    <button onclick="setQuickGoal('exercise', '3 times this week')" class="text-left p-4 border border-gray-200 rounded-xl hover:border-pastel-purple hover:bg-pastel-purple/5 transition-colors">
+                        <div class="text-2xl mb-2">🏃‍♀️</div>
+                        <div class="font-medium mb-1">Physical Activity</div>
+                        <div class="text-sm text-gray-600">Exercise 3 times this week</div>
+                    </button>
+                    
+                    <button onclick="setQuickGoal('sleep', '8 hours nightly')" class="text-left p-4 border border-gray-200 rounded-xl hover:border-calm-blue hover:bg-calm-blue/5 transition-colors">
+                        <div class="text-2xl mb-2">😴</div>
+                        <div class="font-medium mb-1">Better Sleep</div>
+                        <div class="text-sm text-gray-600">Get 8 hours of sleep nightly</div>
+                    </button>
+                    
+                    <button onclick="setQuickGoal('social', 'connect with 2 friends')" class="text-left p-4 border border-gray-200 rounded-xl hover:border-soft-green hover:bg-soft-green/5 transition-colors">
+                        <div class="text-2xl mb-2">👥</div>
+                        <div class="font-medium mb-1">Social Connection</div>
+                        <div class="text-sm text-gray-600">Connect with 2 friends this week</div>
+                    </button>
+                    
+                    <button onclick="setQuickGoal('gratitude', 'list 3 things daily')" class="text-left p-4 border border-gray-200 rounded-xl hover:border-pastel-purple hover:bg-pastel-purple/5 transition-colors">
+                        <div class="text-2xl mb-2">🙏</div>
+                        <div class="font-medium mb-1">Gratitude Practice</div>
+                        <div class="text-sm text-gray-600">List 3 gratitudes daily</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard Section -->
+    <section id="admin" class="section-content hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">📊 Admin Dashboard</h2>
+                <p class="text-gray-600">Anonymous analytics and trends for mental health support system (Demo Version)</p>
+                <div class="inline-block bg-yellow-100 border border-yellow-300 rounded-lg px-4 py-2 mt-4">
+                    <span class="text-yellow-800 text-sm font-medium">🔒 Demo Dashboard - Sample Data Only</span>
+                </div>
+            </div>
+            
+            <!-- Key Metrics -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="w-12 h-12 bg-calm-blue/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">👥</span>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-2">1,247</div>
+                    <div class="text-sm text-gray-600">Active Users</div>
+                    <div class="text-xs text-green-600 mt-1">↑ 12% this month</div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="w-12 h-12 bg-soft-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">💬</span>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-2">3,891</div>
+                    <div class="text-sm text-gray-600">AI Chat Sessions</div>
+                    <div class="text-xs text-green-600 mt-1">↑ 8% this week</div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="w-12 h-12 bg-pastel-purple/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">📅</span>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-2">156</div>
+                    <div class="text-sm text-gray-600">Counseling Sessions</div>
+                    <div class="text-xs text-green-600 mt-1">↑ 15% this month</div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🎯</span>
+                    </div>
+                    <div class="text-3xl font-bold text-gray-800 mb-2">89%</div>
+                    <div class="text-sm text-gray-600">Goal Completion Rate</div>
+                    <div class="text-xs text-green-600 mt-1">↑ 5% this month</div>
+                </div>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Usage Trends -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-6">📈 Usage Trends</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-calm-blue rounded-full"></div>
+                                <span class="text-sm">AI Chat Support</span>
+                            </div>
+                            <div class="text-sm font-medium">45%</div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-soft-green rounded-full"></div>
+                                <span class="text-sm">Resource Hub</span>
+                            </div>
+                            <div class="text-sm font-medium">28%</div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-pastel-purple rounded-full"></div>
+                                <span class="text-sm">Goal Tracker</span>
+                            </div>
+                            <div class="text-sm font-medium">15%</div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                <span class="text-sm">Peer Forum</span>
+                            </div>
+                            <div class="text-sm font-medium">12%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Common Issues -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-6">🔍 Common Support Topics</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div>
+                                <div class="font-medium text-sm">Academic Stress</div>
+                                <div class="text-xs text-gray-500">Exam anxiety, deadlines, performance pressure</div>
+                            </div>
+                            <div class="text-sm font-medium text-red-600">32%</div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div>
+                                <div class="font-medium text-sm">Anxiety & Depression</div>
+                                <div class="text-xs text-gray-500">General anxiety, mood disorders, panic attacks</div>
+                            </div>
+                            <div class="text-sm font-medium text-orange-600">28%</div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div>
+                                <div class="font-medium text-sm">Social Issues</div>
+                                <div class="text-xs text-gray-500">Loneliness, relationship problems, social anxiety</div>
+                            </div>
+                            <div class="text-sm font-medium text-yellow-600">22%</div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 border border-gray-200 rounded-lg">
+                            <div>
+                                <div class="font-medium text-sm">Sleep & Lifestyle</div>
+                                <div class="text-xs text-gray-500">Sleep disorders, time management, self-care</div>
+                            </div>
+                            <div class="text-sm font-medium text-green-600">18%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="mt-8 bg-white rounded-2xl shadow-lg p-6">
+                <h3 class="text-xl font-semibold mb-6">📋 Recent System Activity</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 border-l-4 border-calm-blue bg-calm-blue/5">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-calm-blue">🤖</span>
+                            <div>
+                                <div class="text-sm font-medium">High AI chat volume detected</div>
+                                <div class="text-xs text-gray-500">15 minutes ago</div>
+                            </div>
+                        </div>
+                        <span class="text-xs bg-calm-blue text-white px-2 py-1 rounded">INFO</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 border-l-4 border-soft-green bg-soft-green/5">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-soft-green">✅</span>
+                            <div>
+                                <div class="text-sm font-medium">Weekly goal completion rate improved</div>
+                                <div class="text-xs text-gray-500">2 hours ago</div>
+                            </div>
+                        </div>
+                        <span class="text-xs bg-soft-green text-white px-2 py-1 rounded">SUCCESS</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 border-l-4 border-yellow-500 bg-yellow-50">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-yellow-600">⚠️</span>
+                            <div>
+                                <div class="text-sm font-medium">Forum post flagged for review</div>
+                                <div class="text-xs text-gray-500">4 hours ago</div>
+                            </div>
+                        </div>
+                        <span class="text-xs bg-yellow-500 text-white px-2 py-1 rounded">REVIEW</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modals -->
+    <!-- New Post Modal -->
+    <div id="new-post-modal" class="modal">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold">Create New Post</h3>
+                <button onclick="closeModal('new-post-modal')" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <form onsubmit="submitForumPost(event)">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Category</label>
+                        <select class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue">
+                            <option value="general">General Support</option>
+                            <option value="anxiety">Anxiety Support</option>
+                            <option value="depression">Depression Support</option>
+                            <option value="academic">Academic Stress</option>
+                            <option value="relationships">Relationships</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Title</label>
+                        <input type="text" placeholder="What's on your mind?" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Message</label>
+                        <textarea rows="4" placeholder="Share your thoughts or ask for support..." class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue" required></textarea>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="anonymous-post" class="mr-2" checked>
+                        <label for="anonymous-post" class="text-sm">Post anonymously</label>
+                    </div>
+                    <button type="submit" class="w-full bg-soft-green text-white py-2 rounded-lg hover:bg-green-600 transition-colors">
+                        Post to Forum
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Goal Setting Modal -->
+    <div id="goal-modal" class="modal">
+        <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold">Set New Goal</h3>
+                <button onclick="closeModal('goal-modal')" class="text-gray-500 hover:text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <form onsubmit="submitGoal(event)">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Goal Type</label>
+                        <select id="goal-type" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue">
+                            <option value="meditation">🧘‍♀️ Meditation</option>
+                            <option value="exercise">🏃‍♀️ Exercise</option>
+                            <option value="journal">📝 Journaling</option>
+                            <option value="sleep">😴 Sleep</option>
+                            <option value="social">👥 Social Connection</option>
+                            <option value="custom">✨ Custom Goal</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Goal Description</label>
+                        <input type="text" id="goal-description" placeholder="e.g., Meditate for 10 minutes daily" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Target (times per week)</label>
+                        <input type="number" id="goal-target" min="1" max="7" value="5" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-calm-blue" required>
+                    </div>
+                    <button type="submit" class="w-full bg-calm-blue text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                        Set Goal
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentSection = 'home';
+        let currentGoal = {
+            type: 'meditation',
+            description: 'Meditate 5 times this week',
+            target: 5,
+            progress: 3,
+            daysLeft: 3
+        };
+
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.remove('hidden');
+            currentSection = sectionId;
+            
+            // Update nav buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-calm-blue', 'font-semibold');
+                btn.classList.add('text-gray-700');
+            });
+            
+            // Close mobile menu
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Chat functionality
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+            
+            addChatMessage(message, 'user');
+            input.value = '';
+            
+            // Simulate AI response
+            setTimeout(() => {
+                const responses = [
+                    "I understand you're going through a difficult time. It's completely normal to feel this way, and I'm here to help. Can you tell me more about what's been bothering you?",
+                    "Thank you for sharing that with me. It takes courage to reach out. Let's work through this together. Have you tried any coping strategies before?",
+                    "That sounds really challenging. Remember that you're not alone in this. Many students experience similar feelings. Would you like me to suggest some techniques that might help?",
+                    "I hear you, and your feelings are valid. It's important to take care of your mental health. Have you considered speaking with a counselor? I can help you find resources.",
+                    "You're taking a positive step by talking about this. Let's focus on some practical strategies you can use right now. Would breathing exercises or grounding techniques be helpful?"
+                ];
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                addChatMessage(randomResponse, 'ai');
+            }, 1000);
+        }
+
+        function sendQuickMessage(message) {
+            addChatMessage(message, 'user');
+            
+            setTimeout(() => {
+                let response = "";
+                if (message.includes('anxious')) {
+                    response = "I understand you're feeling anxious. Anxiety is very common among students. Let's try a quick breathing exercise: breathe in for 4 counts, hold for 4, then breathe out for 6. This can help calm your nervous system. Would you like more anxiety management techniques?";
+                } else if (message.includes('stressed about exams')) {
+                    response = "Exam stress is something almost every student experiences. Here are some strategies that can help: break study sessions into smaller chunks, practice relaxation techniques, maintain a regular sleep schedule, and remember that your worth isn't defined by grades. Would you like specific study techniques or stress management tips?";
+                } else if (message.includes('lonely')) {
+                    response = "Feeling lonely is more common than you might think, especially in college. It's important to know that this feeling is temporary. Consider joining clubs, study groups, or campus activities. Our peer forum is also a great place to connect. Would you like suggestions for building social connections?";
+                } else if (message.includes('coping strategies')) {
+                    response = "I'm glad you're looking for healthy coping strategies! Here are some effective ones: deep breathing exercises, progressive muscle relaxation, journaling, regular exercise, maintaining a routine, and connecting with supportive people. Which of these interests you most?";
+                }
+                addChatMessage(response, 'ai');
+            }, 1000);
+        }
+
+        function addChatMessage(message, sender) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message';
+            
+            if (sender === 'user') {
+                messageDiv.innerHTML = `
+                    <div class="flex items-start space-x-3 justify-end">
+                        <div class="bg-calm-blue text-white rounded-2xl rounded-tr-sm p-3 max-w-xs">
+                            <p class="text-sm">${message}</p>
+                        </div>
+                        <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-gray-600 text-sm">👤</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-calm-blue rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-white text-sm">🤖</span>
+                        </div>
+                        <div class="bg-gray-100 rounded-2xl rounded-tl-sm p-3 max-w-xs">
+                            <p class="text-sm">${message}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function clearChat() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = `
+                <div class="flex items-start space-x-3 chat-message">
+                    <div class="w-8 h-8 bg-calm-blue rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-white text-sm">🤖</span>
+                    </div>
+                    <div class="bg-gray-100 rounded-2xl rounded-tl-sm p-3 max-w-xs">
+                        <p class="text-sm">Hello! I'm here to provide mental health support and guidance. How are you feeling today? Remember, if you're in crisis, please call AASRA (91529-87821) or emergency services (102/108) immediately.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Booking functionality
+        function toggleSessionOptions() {
+            const onlineOptions = document.getElementById('online-options');
+            const offlineOptions = document.getElementById('offline-options');
+            const sessionMode = document.querySelector('input[name="session-mode"]:checked').value;
+            
+            if (sessionMode === 'online') {
+                onlineOptions.classList.remove('hidden');
+                offlineOptions.classList.add('hidden');
+            } else {
+                onlineOptions.classList.add('hidden');
+                offlineOptions.classList.remove('hidden');
+            }
+        }
+
+        function handleBooking(event) {
+            event.preventDefault();
+            const sessionMode = document.querySelector('input[name="session-mode"]:checked').value;
+            const sessionType = document.querySelector('select').value;
+            
+            let message = 'Thank you for your appointment request! ';
+            
+            if (sessionMode === 'online') {
+                message += 'A counselor will contact you within 24 hours to confirm your online session and share the meeting details.';
+            } else {
+                message += 'A counselor will contact you within 24 hours to confirm your in-person session location and provide directions.';
+            }
+            
+            message += '\n\nIf you need immediate support, please call:\n• AASRA: 91529-87821\n• Vandrevala: 1860-2662-345';
+            
+            alert(message);
+        }
+
+        // Resources functionality
+        function filterByLanguage() {
+            const selectedLanguage = document.getElementById('language-selector').value;
+            const resourceItems = document.querySelectorAll('.resource-item');
+            
+            resourceItems.forEach(item => {
+                if (selectedLanguage === 'all' || item.dataset.language === selectedLanguage) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function startBreathingExercise() {
+            alert('🫁 Breathing Exercise Started!\n\nFollow along:\n1. Breathe in slowly for 4 counts\n2. Hold your breath for 4 counts\n3. Breathe out slowly for 6 counts\n4. Repeat 5-10 times\n\nThis exercise helps activate your body\'s relaxation response.');
+        }
+
+        function startMoodTracker() {
+            const mood = prompt('📊 How are you feeling right now?\n\n1. Very Happy 😊\n2. Happy 🙂\n3. Neutral 😐\n4. Sad 😔\n5. Very Sad 😢\n\nEnter a number (1-5):');
+            if (mood && mood >= 1 && mood <= 5) {
+                alert('Thank you for tracking your mood! Remember, it\'s normal for moods to fluctuate. If you\'re consistently feeling low, consider reaching out for support.');
+            }
+        }
+
+        function startGratitudeJournal() {
+            const gratitude = prompt('📝 Gratitude Journal\n\nName one thing you\'re grateful for today:');
+            if (gratitude) {
+                alert('Thank you for sharing! 🙏 Practicing gratitude regularly can improve mental well-being and help shift focus to positive aspects of life.');
+            }
+        }
+
+        function startRelaxationTimer() {
+            const minutes = prompt('⏰ Relaxation Timer\n\nHow many minutes would you like to relax? (1-30):');
+            if (minutes && minutes >= 1 && minutes <= 30) {
+                alert(`Timer set for ${minutes} minutes! 🧘‍♀️\n\nFind a comfortable position, close your eyes, and focus on your breathing. Take this time to relax and be present.`);
+            }
+        }
+
+        // Forum functionality
+        function filterForum(category) {
+            const posts = document.querySelectorAll('.forum-post');
+            const filters = document.querySelectorAll('.forum-filter');
+            
+            // Update filter buttons
+            filters.forEach(filter => {
+                filter.classList.remove('bg-calm-blue/10', 'text-calm-blue');
+                filter.classList.add('hover:bg-gray-100');
+            });
+            
+            event.target.classList.add('bg-calm-blue/10', 'text-calm-blue');
+            event.target.classList.remove('hover:bg-gray-100');
+            
+            // Filter posts
+            posts.forEach(post => {
+                if (category === 'all' || post.dataset.category === category) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        }
+
+        function showNewPostModal() {
+            document.getElementById('new-post-modal').classList.add('active');
+        }
+
+        function submitForumPost(event) {
+            event.preventDefault();
+            alert('Your post has been submitted for moderation and will appear in the forum shortly. Thank you for contributing to our supportive community!');
+            closeModal('new-post-modal');
+        }
+
+        // Goal tracking functionality
+        function logProgress() {
+            currentGoal.progress++;
+            updateGoalDisplay();
+            
+            const encouragements = [
+                "Excellent work! You're making great progress! 🌟",
+                "Way to go! Keep up the momentum! 💪",
+                "Fantastic! You're building a healthy habit! 🎉",
+                "Amazing dedication! You should be proud! 👏",
+                "Outstanding! You're taking great care of yourself! ✨"
+            ];
+            
+            const randomEncouragement = encouragements[Math.floor(Math.random() * encouragements.length)];
+            alert(randomEncouragement);
+        }
+
+        function updateGoalDisplay() {
+            const progressPercent = Math.round((currentGoal.progress / currentGoal.target) * 100);
+            const progressBar = document.querySelector('.progress-bar');
+            const progressText = document.querySelector('.progress-bar').parentElement.querySelector('span');
+            
+            if (progressBar) {
+                progressBar.style.width = progressPercent + '%';
+            }
+        }
+
+        function showGoalModal() {
+            document.getElementById('goal-modal').classList.add('active');
+        }
+
+        function submitGoal(event) {
+            event.preventDefault();
+            const type = document.getElementById('goal-type').value;
+            const description = document.getElementById('goal-description').value;
+            const target = document.getElementById('goal-target').value;
+            
+            currentGoal = {
+                type: type,
+                description: description,
+                target: parseInt(target),
+                progress: 0,
+                daysLeft: 7
+            };
+            
+            updateGoalDisplay();
+            alert('Your new goal has been set! Remember, consistency is key. You can do this! 🎯');
+            closeModal('goal-modal');
+        }
+
+        function setQuickGoal(type, description) {
+            const targets = {
+                'meditate': 5,
+                'journal': 7,
+                'exercise': 3,
+                'sleep': 7,
+                'social': 2,
+                'gratitude': 7
+            };
+            
+            currentGoal = {
+                type: type,
+                description: description,
+                target: targets[type] || 5,
+                progress: 0,
+                daysLeft: 7
+            };
+            
+            updateGoalDisplay();
+            alert(`Goal set: ${description}! 🎯\n\nYou've got this! Start small and be consistent. Every step counts toward better mental wellness.`);
+        }
+
+        // Modal functionality
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        });
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set minimum date for booking to today
+            const dateInput = document.querySelector('input[type="date"]');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.min = today;
+                dateInput.value = today;
+            }
+            
+            // Initialize goal display
+            updateGoalDisplay();
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9842cdf2c2ea8aff',t:'MTc1ODcyMjM4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
