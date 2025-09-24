@@ -6,6 +6,9 @@ const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const User = require('./model/user'); // Make sure the path is correct
+const Counselor = require('./model/counselor');
+const Resource = require('./model/resource');
+const Booking = require('./model/booking');
 const expressLayouts = require('express-ejs-layouts'); // Add this line
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/mannmitra')
@@ -42,13 +45,73 @@ const authMiddleware = (req, res, next) => {
 };
 // Routes
 
-app.get("/booking",authMiddleware, (req, res) => res.render("booking"));
+app.get('/booking', authMiddleware, async (req, res) => {
+    try {
+        const counselors = await Counselor.find({});
+        res.render('booking', { counselors: counselors });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error fetching counselors.');
+    }
+});
+app.post('/booking', authMiddleware, async (req, res) => {
+    try {
+        const { counselorId, date, time, concern } = req.body;
+        
+        // Combine date and time
+        const bookingDate = new Date(`${date}T${time}`);
+        
+        const newBooking = new Booking({
+            userId: req.session.userId, // Get user ID from the session
+            counselorId,
+            date: bookingDate,
+            concern
+        });
+        
+        await newBooking.save();
+        
+        // Redirect to a confirmation page or user dashboard
+        res.redirect('/profile'); 
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Booking failed.');
+    }
+});
+
 app.get("/chatbot",authMiddleware, (req, res) => res.render("AI_chatbot"));
-app.get("/resources", authMiddleware,(req, res) => res.render("resource"));
+
+app.get('/resources', authMiddleware, async (req, res) => {
+    try {
+        const resources = await Resource.find({});
+        res.render('resources', { resources: resources });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error loading resources.');
+    }
+});
 app.get("/peersupport",authMiddleware, (req, res) => res.render("peerSupport"));
 app.get("/admin",authMiddleware, (req, res) => res.render("addmin"));
 app.get('/signup', (req, res) => {
     res.render('signup');
+});
+app.get('/profile', authMiddleware, async (req, res) => {
+    try {
+        // Find the logged-in user's data
+        const user = await User.findById(req.session.userId);
+
+        // Find all bookings for that user and populate the counselor details
+        const userBookings = await Booking.find({ userId: req.session.userId })
+            .populate('counselorId');
+
+        // Render the profile page, passing both user data and bookings
+        res.render('profile', { 
+            user: user,
+            bookings: userBookings 
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error loading profile information.');
+    }
 });
 
 app.post('/signup', async (req, res) => {
