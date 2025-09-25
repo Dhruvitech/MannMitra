@@ -113,7 +113,7 @@ app.get('/profile', authMiddleware, async (req, res) => {
         res.status(500).send('Error loading profile information.');
     }
 });
-
+app.get("/goals",authMiddleware, (req, res) => res.render("goals"));
 app.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
     try {
