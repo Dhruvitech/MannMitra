@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MannMitra - Goal Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'calm-blue': '#6B9BD2',
+            'soft-green': '#7FB069',
+            'pastel-purple': '#B19CD9',
+            'warm-beige': '#F5F1E8',
+            'light-mint': '#E8F5E8'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .gradient-bg {
+      background: linear-gradient(135deg, #E8F5E8 0%, #F0F8FF 100%);
+    }
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .progress-bar {
+      transition: width 0.5s ease-in-out;
+    }
+  </style>
+</head>
+<body class="gradient-bg min-h-screen">
+ 
+
+  <!-- Goal Tracker Section -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">🎯 Personal Goal Tracker</h2>
+      <p class="text-gray-600">Set achievable weekly goals and track your progress toward better mental wellness habits.</p>
+    </div>
+    
+    <div class="grid lg:grid-cols-2 gap-8">
+      <!-- Current Goal -->
+      <div class="bg-white rounded-2xl shadow-lg p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="text-xl font-semibold">This Week's Goal</h3>
+          <button onclick="showGoalModal()" 
+                  class="bg-calm-blue text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm">
+            Set New Goal
+          </button>
+        </div>
+        
+        <div id="current-goal" class="space-y-4">
+          <div class="bg-soft-green/10 border border-soft-green/20 rounded-xl p-4">
+            <div class="flex items-center justify-between mb-3">
+              <h4 id="goal-title-display" class="font-semibold text-soft-green">🧘‍♀ Meditate 5 times this week</h4>
+              <span id="goal-days-left" class="text-sm text-gray-500">3/7 days left</span>
+            </div>
+            
+            <div class="mb-4">
+              <div class="flex justify-between text-sm mb-2">
+                <span id="goal-progress-text">Progress: 3/5 sessions</span>
+                <span id="goal-progress-percent" class="text-soft-green font-medium">60%</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div id="goal-progress-bar" class="bg-soft-green h-3 rounded-full progress-bar" style="width: 60%"></div>
+              </div>
+            </div>
+            
+            <div class="flex items-center justify-between">
+              <button onclick="logSession()" 
+                      class="bg-soft-green text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors text-sm">
+                ✅ Log Session
+              </button>
+              <div class="text-sm text-gray-600">
+                <span class="text-soft-green font-medium">Great progress!</span> Keep it up! 🌟
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Goal Stats -->
+      <div class="space-y-6">
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <h3 class="text-xl font-semibold mb-4">Weekly Stats</h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="text-center p-4 bg-soft-green/10 rounded-xl">
+              <div class="text-2xl font-bold text-soft-green">3</div>
+              <div class="text-sm text-gray-600">Goals Completed</div>
+            </div>
+            <div class="text-center p-4 bg-calm-blue/10 rounded-xl">
+              <div class="text-2xl font-bold text-calm-blue">85%</div>
+              <div class="text-sm text-gray-600">Average Progress</div>
+            </div>
+            <div class="text-center p-4 bg-pastel-purple/10 rounded-xl">
+              <div class="text-2xl font-bold text-pastel-purple">12</div>
+              <div class="text-sm text-gray-600">Day Streak</div>
+            </div>
+            <div class="text-center p-4 bg-yellow-100 rounded-xl">
+              <div class="text-2xl font-bold text-yellow-600">🏆</div>
+              <div class="text-sm text-gray-600">Achievement</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Suggested Goals -->
+    <div class="mt-12 bg-white rounded-2xl shadow-lg p-6">
+      <h3 class="text-xl font-semibold mb-6">💡 Suggested Goals for Mental Wellness</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <button onclick="quickSetGoal('🧘‍♀ Meditate 5 times this week', 5)" 
+                class="text-left p-4 border border-gray-200 rounded-xl hover:border-calm-blue hover:bg-calm-blue/5 transition-colors">
+          <div class="text-2xl mb-2">🧘‍♀</div>
+          <div class="font-medium mb-1">Meditation Practice</div>
+          <div class="text-sm text-gray-600">Meditate 5 times this week</div>
+        </button>
+        
+        <button onclick="quickSetGoal('📝 Write in journal daily for 7 days', 7)" 
+                class="text-left p-4 border border-gray-200 rounded-xl hover:border-soft-green hover:bg-soft-green/5 transition-colors">
+          <div class="text-2xl mb-2">📝</div>
+          <div class="font-medium mb-1">Daily Journaling</div>
+          <div class="text-sm text-gray-600">Write in journal daily for 7 days</div>
+        </button>
+        
+        <button onclick="quickSetGoal('🏃‍♀ Exercise 3 times this week', 3)" 
+                class="text-left p-4 border border-gray-200 rounded-xl hover:border-pastel-purple hover:bg-pastel-purple/5 transition-colors">
+          <div class="text-2xl mb-2">🏃‍♀</div>
+          <div class="font-medium mb-1">Physical Activity</div>
+          <div class="text-sm text-gray-600">Exercise 3 times this week</div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Goal Setting Modal -->
+  <div id="goal-modal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-lg font-semibold">Set a New Goal</h3>
+        <button onclick="closeModal('goal-modal')" class="text-gray-500 hover:text-gray-700">
+          ✖
+        </button>
+      </div>
+      <form onsubmit="saveGoal(event)">
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-2">Goal Title</label>
+            <input type="text" id="goal-title" class="w-full border rounded-lg px-3 py-2" placeholder="e.g., Meditate daily" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2">Target</label>
+            <input type="number" id="goal-target" class="w-full border rounded-lg px-3 py-2" placeholder="e.g., 5 sessions" required>
+          </div>
+          <button type="submit" class="w-full bg-calm-blue text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">
+            ✅ Save Goal
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    let currentProgress = 3;
+    let targetSessions = 5;
+
+    function showGoalModal() {
+      document.getElementById('goal-modal').classList.remove('hidden');
+      document.getElementById('goal-modal').classList.add('flex');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+      document.getElementById(id).classList.remove('flex');
+    }
+
+    function saveGoal(event) {
+      event.preventDefault();
+      const title = document.getElementById('goal-title').value;
+      const target = parseInt(document.getElementById('goal-target').value);
+
+      document.getElementById('goal-title-display').textContent = title;
+      currentProgress = 0;
+      targetSessions = target;
+      updateProgress();
+
+      closeModal('goal-modal');
+    }
+
+    function quickSetGoal(title, target) {
+      document.getElementById('goal-title-display').textContent = title;
+      currentProgress = 0;
+      targetSessions = target;
+      updateProgress();
+    }
+
+    function logSession() {
+      if (currentProgress < targetSessions) {
+        currentProgress++;
+        updateProgress();
+      } else {
+        alert("🎉 Goal already completed!");
+      }
+    }
+
+    function updateProgress() {
+      const percent = Math.round((currentProgress / targetSessions) * 100);
+      document.getElementById('goal-progress-text').textContent = Progress: ${currentProgress}/${targetSessions} sessions;
+      document.getElementById('goal-progress-percent').textContent = percent + "%";
+      document.getElementById('goal-progress-bar').style.width = percent + "%";
+    }
+  </script>
+</body>
+</html>

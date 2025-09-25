@@ -18,6 +18,7 @@
                         <a href="/resources" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Resources</a>
                         <a href="/peersupport" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Peer Support</a>
                         <a href="/admin" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Admin</a>
+                        <a href="/goals" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Set Goals</a>
                         <% if (user) { %>             
                             <a href="/profile" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Profile</a>
         <button style="border: 1px solid rgba(20, 19, 19, 0.373); border-radius: 8px;padding: 6px;"><a href="/logout" >Logout </a></button>
@@ -44,8 +45,9 @@
                 <a href="/resources" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Resources</a>
                 <a href="/peersupport" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Peer Support</a>
                 <a href="/admin" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Admin</a>
-                <a href="/profile" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Profile</a>
-                 <% if (typeof user !== 'undefined') { %>
+                <a href="/goals" class="nav-link text-gray-700 hover:text-calm-blue px-3 py-2 rounded-md text-sm font-medium transition-colors">Set Goals</a>
+                <% if (typeof user !== 'undefined') { %>
+                    <a href="/profile" class="nav-link block px-3 py-2 text-gray-700 hover:text-calm-blue">Profile</a>
         <a href="/logout">Logout</a>
     <% } else { %>
         <a href="/login">Login</a>
